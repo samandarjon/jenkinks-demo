@@ -18,10 +18,12 @@ pipeline {
             }
         }
 
-        stage('Deploy to k8s'){
+        stage('Run Docker image'){
             steps{
                 script{
-                    bat "kubectl apply -f ./deployment.yaml"
+                    bat "docker stop com.epam/jenkins-demo"
+                    bat "docker rm com.epam/jenkins-demo"
+                    bat "docker run -p 8081:8081 com.epam/jenkins-demo -d"
                 }
             }
         }
